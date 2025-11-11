@@ -138,7 +138,7 @@ export default function Fretboard({
                 : firstSlotWidth + gapWidth + (i - 1) * (slotWidth + gapWidth) + slotWidth;
               
               // 总宽度 = 第一品 + (其他品数量) * (品宽度 + gap)
-              const totalContentWidth = firstSlotWidth + (numFrets - 1) * slotWidth + (numFrets - 1) * gapWidth;
+              // const totalContentWidth = firstSlotWidth + (numFrets - 1) * slotWidth + (numFrets - 1) * gapWidth;
               
               // 使用像素值定位，而不是百分比，确保精确对齐
               return (
@@ -153,7 +153,7 @@ export default function Fretboard({
           
           {/* 琴弦 */}
           <div className="guitar-strings">
-            {openStrings.map((note, index) => {
+            {openStrings.map((_, index) => {
               // 琴弦位于每根弦的中心位置
               const stringPosition = ((index + 0.5) * 100) / 6;
               return (

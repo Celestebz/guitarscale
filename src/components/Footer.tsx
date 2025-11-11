@@ -11,7 +11,7 @@ const SCALE_MODE_LABELS: Record<string, string> = {
 };
 
 export default function Footer({ scaleInfo }: FooterProps) {
-  const { key, mode, notes, intervals } = scaleInfo;
+  const { key, mode, notes } = scaleInfo;
   
   return (
     <footer className="footer">
