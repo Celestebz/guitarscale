@@ -1,0 +1,306 @@
+.fretboard-container {
+  padding: 20px;
+  overflow-x: auto; /* 改为auto，允许横向滚动而不是隐藏 */
+  background: linear-gradient(to bottom, #2c3e50 0%, #34495e 100%);
+}
+
+.fretboard-container.fretboard-12-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fretboard {
+  position: relative;
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fretboard-content {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-width: fit-content; /* 确保有足够宽度显示所有品 */
+}
+
+.fretboard-12 {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.fretboard-24 {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* 品位数字（底部） */
+.fret-numbers-bottom {
+  display: flex;
+  gap: 12px; /* 与fret-row的gap一致 */
+  margin-top: 10px;
+  align-items: center;
+  padding-left: 0;
+  margin-left: 3px; /* 与fret-row的margin-left对齐 */
+}
+
+.fret-number-spacer {
+  width: 50px; /* 与弦标签区域对齐 */
+  flex-shrink: 0;
+  margin-left: 10px; /* 对应指板背景的padding */
+}
+
+/* 品位标记（真实吉他上的圆点标记） */
+.fret-markers {
+  position: absolute;
+  top: 50%;
+  left: 3px; /* 与fret-row对齐（考虑margin-left） */
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+  height: 0;
+  width: auto; /* 使用自动宽度，让标记使用像素定位 */
+}
+
+.fret-marker {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+}
+
+/* 第12品双点标记（垂直排列） */
+.fret-marker.double {
+  width: 8px;
+  height: auto;
+  background: none;
+  transform: translate(-50%, -50%);
+}
+
+.fret-marker.double::before,
+.fret-marker.double::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.fret-marker.double::before {
+  top: -12px;
+}
+
+.fret-marker.double::after {
+  top: 12px;
+}
+
+/* 弦标签区域（0品位置，不在指板背景上） */
+.open-strings-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 10px;
+  min-width: 50px;
+  background: transparent;
+  gap: 1px;
+}
+
+.open-string-label {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 指板背景 */
+.fretboard-background {
+  position: relative;
+  background: linear-gradient(to bottom, 
+    #6b5233 0%, 
+    #5a4228 50%,
+    #4a3a26 100%);
+  border-radius: 4px;
+  padding: 20px 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid #3d2f1f;
+  flex: 1;
+  overflow: visible; /* 改为visible，确保所有品都能显示 */
+  min-width: fit-content; /* 确保有足够宽度显示所有品 */
+}
+
+/* 12品模式的最小宽度 */
+.fretboard-12 .fretboard-background {
+  /* 计算：padding(20+10) + margin-left(3) + 第一品(50) + 11品(11*35) + 11gap(11*12) + padding-right(10) = 610px */
+  min-width: 610px;
+}
+
+/* 24品模式的最小宽度 */
+.fretboard-24 .fretboard-background {
+  /* 计算：padding(20+10) + margin-left(3) + 第一品(50) + 23品(23*35) + 23gap(23*12) + padding-right(10) = 1126px */
+  min-width: 1126px;
+}
+
+/* 左侧品柱（0品位置，较粗） */
+.fret-post-left {
+  position: absolute;
+  top: 0;
+  left: 0; /* 与内容区域对齐（相对于内容区域） */
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, 
+    rgba(220, 220, 220, 0.7) 0%, 
+    rgba(200, 200, 200, 0.8) 30%,
+    rgba(180, 180, 180, 0.7) 70%,
+    rgba(160, 160, 160, 0.6) 100%);
+  box-shadow: 
+    0 0 2px rgba(0, 0, 0, 0.3),
+    inset 0 0 2px rgba(255, 255, 255, 0.2);
+  z-index: 2;
+}
+
+/* 品丝线条 */
+.fret-lines {
+  position: absolute;
+  top: 0;
+  left: 3px; /* 与fret-row对齐（考虑margin-left） */
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  width: auto; /* 使用自动宽度，让品丝使用像素定位 */
+}
+
+.fret-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, 
+    rgba(200, 200, 200, 0.6) 0%, 
+    rgba(180, 180, 180, 0.7) 50%,
+    rgba(160, 160, 160, 0.5) 100%);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transform: translateX(-50%);
+}
+
+/* 移除隐藏第0品的规则，因为现在从第1品开始 */
+
+/* 琴弦 */
+.guitar-strings {
+  position: absolute;
+  top: 0;
+  left: 3px; /* 与fret-row对齐（考虑margin-left） */
+  right: 10px;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.guitar-string {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(240, 240, 240, 0.8) 50%,
+    rgba(255, 255, 255, 0.7) 100%);
+  box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%);
+}
+
+/* 音符覆盖层 */
+.notes-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.fretboard-string {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  min-width: fit-content; /* 确保所有品都能显示 */
+}
+
+.fret-row {
+  display: flex;
+  gap: 12px; /* 增加品位之间的间隙 */
+  position: relative;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px 0 0; /* 右侧保持10px padding */
+  margin-left: 3px; /* 从品柱右侧开始（品柱宽度3px） */
+  min-width: fit-content; /* 确保所有品都能显示 */
+  flex-shrink: 0; /* 防止被压缩 */
+}
+
+.fret-slot {
+  width: 35px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* 第一品更宽 */
+.fret-row .fret-slot:first-child {
+  width: 50px; /* 第一品宽度增加到50px */
+}
+
+.fretboard-12 .fret-row {
+  flex: 0 0 auto;
+}
+
+.fretboard-24 .fret-row {
+  flex: 0 0 auto;
+}
+
+
+.fret-number {
+  width: 35px; /* 其他品宽度 */
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 第一品数字更宽 */
+.fret-numbers-bottom .fret-number:first-of-type {
+  width: 50px; /* 第一品宽度，与fret-slot一致 */
+}
+
+
