@@ -2,7 +2,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-62%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,8 +16,36 @@
 }
 
 .note-cell:hover {
-  transform: translate(-50%, -50%) scale(1.05);
+  transform: translate(-62%, -50%) scale(1.05);
   z-index: 1;
+}
+
+/* 第一品保持较小偏移，避免过度左移 */
+.fret-row .fret-slot:first-child .note-cell,
+.fret-row .fret-slot:first-child .note-cell:hover {
+  transform: translate(-50%, -50%);
+}
+
+.fret-row .fret-slot:first-child .note-cell:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* 1弦（视觉最底部，第6个 .fretboard-string）整体上移一些，使 E/B 更贴近弦中心 */
+.notes-overlay .fretboard-string:nth-child(6) .note-cell {
+  transform: translate(-62%, -52%);
+}
+
+.notes-overlay .fretboard-string:nth-child(6) .note-cell:hover {
+  transform: translate(-62%, -52%) scale(1.05);
+}
+
+/* 1弦的第1品维持与其他品一致的相对右移设置，同时上移 */
+.notes-overlay .fretboard-string:nth-child(6) .fret-row .fret-slot:first-child .note-cell {
+  transform: translate(-50%, -52%);
+}
+
+.notes-overlay .fretboard-string:nth-child(6) .fret-row .fret-slot:first-child .note-cell:hover {
+  transform: translate(-50%, -52%) scale(1.05);
 }
 
 .note-label {
