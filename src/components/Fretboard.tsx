@@ -68,7 +68,7 @@ export default function Fretboard({
           {/* 弦标签区域（0品位置，不在指板背景上） */}
           <div className="open-strings-area">
             {openStrings.map((note, index) => (
-              <div key={index} className="open-string-label">
+              <div key={index} className="open-string-label" data-note={note}>
                 {note}
               </div>
             ))}

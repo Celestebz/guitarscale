@@ -122,11 +122,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(4px); /* 再次微调：精准对齐琴弦 */
+  transform: translateY(0px); /* 基础位置 */
   font-weight: 600;
   font-size: 16px;
   color: #fff;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 单独调整每个空弦音标签的位置 */
+.open-string-label[data-note="E"]:first-of-type {
+  transform: translateY(-15px); /* 第1弦(E)位置 */
+}
+
+.open-string-label[data-note="B"] {
+  transform: translateY(-9px); /* 第2弦(B)位置 */
+}
+
+.open-string-label[data-note="G"] {
+  transform: translateY(-3px); /* 第3弦(G)位置 */
+}
+
+.open-string-label[data-note="D"] {
+  transform: translateY(4px); /* 第4弦(D)位置 */
+}
+
+.open-string-label[data-note="A"] {
+  transform: translateY(10px); /* 第5弦(A)位置 */
+}
+
+.open-string-label[data-note="E"]:last-of-type {
+  transform: translateY(17px); /* 第6弦(E)位置 */
 }
 
 /* 指板背景 */
