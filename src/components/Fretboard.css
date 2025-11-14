@@ -1,7 +1,31 @@
 .fretboard-container {
   padding: 20px;
-  overflow-x: auto; /* 改为auto，允许横向滚动而不是隐藏 */
+  overflow-x: auto; /* 允许横向滚动 */
+  overflow-y: hidden;
   background: linear-gradient(to bottom, #2c3e50 0%, #34495e 100%);
+  /* 添加移动端触摸滚动支持 */
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  /* 确保容器可以被触摸 */
+  pointer-events: auto;
+  /* 优化滚动条样式 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.3);
+}
+
+/* 隐藏WebKit滚动条但保留功能 */
+.fretboard-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.fretboard-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.fretboard-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
 }
 
 .fretboard-container.fretboard-12-container {
@@ -22,6 +46,9 @@
   align-items: stretch;
   gap: 0;
   min-width: fit-content; /* 确保有足够宽度显示所有品 */
+  /* 确保内容容器不阻止滚动 */
+  touch-action: pan-x;
+  pointer-events: auto;
 }
 
 .fretboard-12 {
@@ -48,7 +75,7 @@
   width: 50px; /* 与open-strings-area的min-width对齐 */
   flex-shrink: 0;
   margin-left: 0; /* spacer紧跟在margin-left之后，对齐open-strings-area */
-  margin-right: 1px; /* 微调：整体数字向左移动以更居中 */
+  margin-right: 0; /* 移除微调，让数字自然居中 */
 }
 
 /* 品位标记（真实吉他上的圆点标记） */
@@ -166,8 +193,11 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   border: 1px solid #3d2f1f;
   flex: 1;
-  overflow: visible; /* 改为visible，确保所有品都能显示 */
+  overflow: visible; /* 确保所有品都能显示 */
   min-width: fit-content; /* 确保有足够宽度显示所有品 */
+  /* 确保背景容器不阻止滚动 */
+  touch-action: pan-x;
+  pointer-events: auto;
 }
 
 /* 12品模式的最小宽度 */
@@ -323,11 +353,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateX(6px); /* 微调，使数字精确居中于品位中间 */
 }
 
-/* 第一品数字更宽 */
+/* 第一品数字调整 */
 .fret-numbers-bottom .fret-number:first-of-type {
   width: 50px; /* 第一品宽度，与fret-slot一致 */
+  transform: translateX(7px); /* 第一品需要特殊调整，使其居中 */
 }
 
 
